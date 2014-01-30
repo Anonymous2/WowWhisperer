@@ -74,7 +74,26 @@ namespace WowWhisperer
 
         private void buttonLaunchWow_Click(object sender, EventArgs e)
         {
-            process = Process.Start(textBoxWowDir.Text);
+            StartWow();
+        }
+
+        private void StartWow()
+        {
+            if (!File.Exists(textBoxWowDir.Text))
+            {
+                MessageBox.Show("The WoW directory could not be found!", "File not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                process = Process.Start(textBoxWowDir.Text);
+            }
+            catch
+            {
+                return;
+            }
+
             Thread.Sleep(300);
 
             new Thread(() =>
@@ -111,7 +130,6 @@ namespace WowWhisperer
                         //! Login to account and enter game on selected character
                         SendMessage(process.MainWindowHandle, WM_KEYUP, new IntPtr(VK_RETURN), IntPtr.Zero);
                         SendMessage(process.MainWindowHandle, WM_KEYDOWN, new IntPtr(VK_RETURN), IntPtr.Zero);
-                        Thread.Sleep(1800); //! Time it takes on average to connect
                     }
 
                     Thread.CurrentThread.Abort();
@@ -143,7 +161,14 @@ namespace WowWhisperer
                 else if (processes.Length == 1)
                     process = processes[0];
                 else
-                    MessageBox.Show("There is no instance of Wow running at the given moment!", "Process not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                {
+                    DialogResult result = MessageBox.Show("There is no instance of Wow running at the given moment! Do you want to launch one?", "Process not found!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (result != DialogResult.Yes)
+                        return;
+
+                    StartWow();
+                }
 
                 if (process == null)
                 {
