@@ -18,12 +18,16 @@ namespace WowWhisperer
 {
     public partial class MainForm : Form
     {
+        private const int EM_SETCUEBANNER = 0x1501;
         private const uint WM_KEYDOWN = 0x0100;
         private const uint WM_KEYUP = 0x0101;
         private const uint WM_CHAR = 0x0102;
         private const int VK_RETURN = 0x0D;
         private const int VK_TAB = 0x09;
         private const int VK_BACK = 0x08;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern Int32 SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)]string lParam);
 
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
@@ -54,6 +58,12 @@ namespace WowWhisperer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            //! Set the placeholder text
+            SendMessage(textBoxWowDir.Handle, EM_SETCUEBANNER, 0, "Wow.exe directory");
+            SendMessage(textBoxWhisperMessage.Handle, EM_SETCUEBANNER, 0, "Message to send to everybody");
+            SendMessage(textBoxAccountName.Handle, EM_SETCUEBANNER, 0, "Account name");
+            SendMessage(textBoxAccountPassword.Handle, EM_SETCUEBANNER, 0, "Account password");
+
             textBoxWowDir.Text = Settings.Default.WorldOfWarcraftDir;
             textBoxWhisperMessage.Text = Settings.Default.WhisperMessage;
             textBoxAccountName.Text = Settings.Default.AccountName;
