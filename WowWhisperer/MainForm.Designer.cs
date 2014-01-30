@@ -44,7 +44,7 @@
             this.buttonLaunchWow.Location = new System.Drawing.Point(12, 90);
             this.buttonLaunchWow.Name = "buttonLaunchWow";
             this.buttonLaunchWow.Size = new System.Drawing.Size(121, 23);
-            this.buttonLaunchWow.TabIndex = 0;
+            this.buttonLaunchWow.TabIndex = 6;
             this.buttonLaunchWow.Text = "Launch WoW";
             this.buttonLaunchWow.UseVisualStyleBackColor = true;
             this.buttonLaunchWow.Click += new System.EventHandler(this.buttonLaunchWow_Click);
@@ -54,7 +54,7 @@
             this.buttonPerformWhisperer.Location = new System.Drawing.Point(12, 119);
             this.buttonPerformWhisperer.Name = "buttonPerformWhisperer";
             this.buttonPerformWhisperer.Size = new System.Drawing.Size(244, 23);
-            this.buttonPerformWhisperer.TabIndex = 1;
+            this.buttonPerformWhisperer.TabIndex = 8;
             this.buttonPerformWhisperer.Text = "Start the whispers!";
             this.buttonPerformWhisperer.UseVisualStyleBackColor = true;
             this.buttonPerformWhisperer.Click += new System.EventHandler(this.buttonPerformWhisperer_Click);
@@ -64,7 +64,7 @@
             this.textBoxWowDir.Location = new System.Drawing.Point(12, 12);
             this.textBoxWowDir.Name = "textBoxWowDir";
             this.textBoxWowDir.Size = new System.Drawing.Size(219, 20);
-            this.textBoxWowDir.TabIndex = 2;
+            this.textBoxWowDir.TabIndex = 0;
             // 
             // textBoxAccountName
             // 
@@ -86,7 +86,7 @@
             this.textBoxWhisperMessage.Location = new System.Drawing.Point(12, 38);
             this.textBoxWhisperMessage.Name = "textBoxWhisperMessage";
             this.textBoxWhisperMessage.Size = new System.Drawing.Size(244, 20);
-            this.textBoxWhisperMessage.TabIndex = 6;
+            this.textBoxWhisperMessage.TabIndex = 2;
             // 
             // buttonCancelWhispers
             // 
@@ -104,7 +104,7 @@
             this.buttonSearchWowDir.Location = new System.Drawing.Point(231, 11);
             this.buttonSearchWowDir.Name = "buttonSearchWowDir";
             this.buttonSearchWowDir.Size = new System.Drawing.Size(25, 22);
-            this.buttonSearchWowDir.TabIndex = 8;
+            this.buttonSearchWowDir.TabIndex = 1;
             this.buttonSearchWowDir.Text = "...";
             this.buttonSearchWowDir.UseVisualStyleBackColor = true;
             this.buttonSearchWowDir.Click += new System.EventHandler(this.buttonSearchWowDir_Click);
