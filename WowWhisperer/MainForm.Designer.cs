@@ -28,33 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonLaunchWow = new System.Windows.Forms.Button();
+            this.buttonPerformWhisperer = new System.Windows.Forms.Button();
             this.textBoxWowDir = new System.Windows.Forms.TextBox();
             this.textBoxAccountName = new System.Windows.Forms.TextBox();
             this.textBoxAccountPassword = new System.Windows.Forms.TextBox();
             this.textBoxWhisperMessage = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // button1
+            // buttonLaunchWow
             // 
-            this.button1.Location = new System.Drawing.Point(12, 90);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Launch WoW";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonLaunchWow.Location = new System.Drawing.Point(12, 90);
+            this.buttonLaunchWow.Name = "buttonLaunchWow";
+            this.buttonLaunchWow.Size = new System.Drawing.Size(121, 23);
+            this.buttonLaunchWow.TabIndex = 0;
+            this.buttonLaunchWow.Text = "Launch WoW";
+            this.buttonLaunchWow.UseVisualStyleBackColor = true;
+            this.buttonLaunchWow.Click += new System.EventHandler(this.buttonLaunchWow_Click);
             // 
-            // button2
+            // buttonPerformWhisperer
             // 
-            this.button2.Location = new System.Drawing.Point(135, 90);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(121, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Perform whispers";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonPerformWhisperer.Location = new System.Drawing.Point(135, 90);
+            this.buttonPerformWhisperer.Name = "buttonPerformWhisperer";
+            this.buttonPerformWhisperer.Size = new System.Drawing.Size(121, 23);
+            this.buttonPerformWhisperer.TabIndex = 1;
+            this.buttonPerformWhisperer.Text = "Perform whispers";
+            this.buttonPerformWhisperer.UseVisualStyleBackColor = true;
+            this.buttonPerformWhisperer.Click += new System.EventHandler(this.buttonPerformWhisperer_Click);
             // 
             // textBoxWowDir
             // 
@@ -94,8 +94,8 @@
             this.Controls.Add(this.textBoxAccountPassword);
             this.Controls.Add(this.textBoxAccountName);
             this.Controls.Add(this.textBoxWowDir);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonPerformWhisperer);
+            this.Controls.Add(this.buttonLaunchWow);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -111,8 +111,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonLaunchWow;
+        private System.Windows.Forms.Button buttonPerformWhisperer;
         private System.Windows.Forms.TextBox textBoxWowDir;
         private System.Windows.Forms.TextBox textBoxAccountName;
         private System.Windows.Forms.TextBox textBoxAccountPassword;
