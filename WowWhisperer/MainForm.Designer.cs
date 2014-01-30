@@ -88,6 +88,7 @@
             // 
             // buttonCancelWhispers
             // 
+            this.buttonCancelWhispers.Enabled = false;
             this.buttonCancelWhispers.Location = new System.Drawing.Point(135, 119);
             this.buttonCancelWhispers.Name = "buttonCancelWhispers";
             this.buttonCancelWhispers.Size = new System.Drawing.Size(121, 23);
