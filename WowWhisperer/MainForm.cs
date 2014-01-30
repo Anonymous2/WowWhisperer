@@ -12,7 +12,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GreyMagic;
 using WowWhisperer.Properties;
 
 namespace WowWhisperer
@@ -73,36 +72,102 @@ namespace WowWhisperer
             textBoxWowDir.Text = Settings.Default.WorldOfWarcraftDir;
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        [StructLayout(LayoutKind.Sequential)]
+        public struct PROCESSENTRY32
         {
-            ////uint playerclass = wow.ReadUInt((uint)baseWoW + 0xDC9755);
-            //ExternalProcessReader reader = new ExternalProcessReader(process);
-            //IntPtr imgBase = reader.ImageBase;
-            //SafeMemoryHandle handle = reader.ProcessHandle;
-            ////reader.ReadBytes((uint)handle + 0xDC9755);
-            //MarshalStruct _marshalStruct = reader.Read<MarshalStruct>(LocalPlayerKnownSpells, true);
-            //MessageBox.Show(_marshalStruct.Val1.ToString());
+            public uint dwSize;
+            public uint cntUsage;
+            public uint th32ProcessID;
+            public IntPtr th32DefaultHeapID;
+            public uint th32ModuleID;
+            public uint cntThreads;
+            public uint th32ParentProcessID;
+            public int pcPriClassBase;
+            public uint dwFlags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+            public string szExeFile;
+        };
+
+        [Flags]
+        public enum SnapshotFlags : uint
+        {
+            HeapList = 0x00000001,
+            Process = 0x00000002,
+            Thread = 0x00000004,
+            Module = 0x00000008,
+            Module32 = 0x00000010,
+            Inherit = 0x80000000,
+            All = 0x0000001F
+        }
+
+        public struct MODULEENTRY32
+        {
+            public uint dwSize;
+            public uint th32ModuleID;
+            public uint th32ProcessID;
+            public uint GlblcntUsage;
+            public uint ProccntUsage;
+            public IntPtr modBaseAddr;
+            public uint modBaseSize;
+            public IntPtr hModule;
+            public string szModule;
+            public string szExePath;
+        }
+
+        private const int TH32CS_SNAPPROCESS = 0x00000002;
+        private const int TH32CS_SNAPMODULE = 0x00000008;
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern IntPtr CreateToolhelp32Snapshot(uint dwFlags, uint th32ProcessID);
+
+        [DllImport("kernel32.dll")]
+        static extern bool Process32First(IntPtr hSnapshot, ref PROCESSENTRY32 lppe);
+
+        [DllImport("kernel32.dll")]
+        static extern bool Process32Next(IntPtr hSnapshot, ref PROCESSENTRY32 lppe);
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+
+        [DllImport("kernel32.dll")]
+        public static extern bool Module32Next(IntPtr hSnapshot, ref MODULEENTRY32 lpme);
+
+        [DllImport("kernel32.dll")]
+        public static extern bool Module32First(IntPtr hSnapshot, ref MODULEENTRY32 lpme);
+
+        struct WhoResult
+        {
+            [MarshalAsAttribute(UnmanagedType.ByValTStr, SizeConst = 48)]
+            public string Name;
+            [MarshalAsAttribute(UnmanagedType.ByValTStr, SizeConst = 96)]
+            public string GuildName;
+            public int Level;
+            public int Race;
+            public int Class;
+            public int Gender;
+            public int Area;
+        }
+
+        public byte[] ReadBytes(IntPtr hnd, IntPtr Pointer, int Length)
+        {
+            byte[] Arr = new byte[Length];
+            uint Bytes = 0;
+            ReadProcessMemory(hnd, Pointer, Arr, (UIntPtr)Length, ref Bytes);
+            return Arr;
+        }
+
+        T ByteArrayToStructure<T>(byte[] bytes) where T: struct 
+        {
+            GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+            T stuff = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
+            handle.Free();
+            return stuff;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             process = Process.Start(textBoxWowDir.Text);
             Thread.Sleep(300);
-
-            ////ReadMemory(C79FD8, 50, process.MainWindowHandle);
-            //uint baseAddress = (uint)process.MainModule.BaseAddress.ToInt32();
-            //IntPtr readHandle = OpenProcess(0x0010, false, (uint)process.Id);
-            //byte[] bytes = new byte[24];
-            //uint rw = 0;
-            //uint size = sizeof(int);
-
-            //ReadProcessMemory(readHandle, ((IntPtr)baseAddress + 0x0C79FD8), bytes, (UIntPtr)24, ref rw);
-            //string ownedcore = Encoding.UTF8.GetString(bytes);
-            //ReadProcessMemory(readHandle, (IntPtr)baseAddress + 0x00528744, bytes, (UIntPtr)size, ref rw);
-            //int someNumber = BitConverter.ToInt32(bytes, 0);
-            //MessageBox.Show(ownedcore);
-            //MessageBox.Show(someNumber.ToString());
-            //return;
 
             new Thread(() =>
             {
@@ -154,14 +219,23 @@ namespace WowWhisperer
         {
             if (process == null)
             {
-                DialogResult result = MessageBox.Show("You did not launch an instance of World of Warcraft from the application. Do you wish to select a running instance?", "Do you want to select a process?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                Process[] processes = Process.GetProcessesByName("Wow");
 
-                if (result != DialogResult.Yes)
-                    return;
+                if (processes.Length > 1)
+                {
+                    DialogResult result = MessageBox.Show("You did not launch an instance of World of Warcraft from the application. Do you wish to select a running instance?", "Do you want to select a process?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                using (SearchForProcessForm searchForProcessForm = new SearchForProcessForm())
-                    if (searchForProcessForm.ShowDialog(this) != DialogResult.OK)
+                    if (result != DialogResult.Yes)
                         return;
+
+                    using (SearchForProcessForm searchForProcessForm = new SearchForProcessForm())
+                        if (searchForProcessForm.ShowDialog(this) != DialogResult.OK)
+                            return;
+                }
+                else if (processes.Length == 1)
+                    process = processes[0];
+                else
+                    MessageBox.Show("There is no instance of Wow running at the given moment!", "Process not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 if (process == null)
                 {
@@ -202,6 +276,29 @@ namespace WowWhisperer
                         PostMessage(process.MainWindowHandle, WM_KEYUP, new IntPtr(VK_RETURN), IntPtr.Zero);
                         PostMessage(process.MainWindowHandle, WM_KEYDOWN, new IntPtr(VK_RETURN), IntPtr.Zero);
                         Thread.Sleep(1000);
+
+                        byte[] numWhosBytes = ReadBytes(process.Handle, process.MainModule.BaseAddress + 0x87BFE0, 4);
+                        uint numWhos = BitConverter.ToUInt32(numWhosBytes, 0);
+
+                        int size = Marshal.SizeOf(typeof(WhoResult));
+                        byte[] bytes = ReadBytes(process.Handle, ((IntPtr)process.MainModule.BaseAddress + 0x879FD8), ((int)numWhos * size));
+                        List<byte> byteList = new List<byte>(bytes);
+
+                        for (int j = 0; j < numWhos; ++j)
+                        {
+                            WhoResult whoResult = ByteArrayToStructure<WhoResult>(byteList.GetRange(j * size, size).ToArray());
+                            string whisperStr = textBoxWhisperMessage.Text.Replace("_name_", whoResult.Name);
+
+                            for (int x = 0; x < whisperStr.Length; ++x)
+                            {
+                                PostMessage(process.MainWindowHandle, WM_CHAR, new IntPtr(whisperStr[x]), IntPtr.Zero);
+                                Thread.Sleep(20);
+                            }
+
+                            PostMessage(process.MainWindowHandle, WM_KEYUP, new IntPtr(VK_RETURN), IntPtr.Zero);
+                            PostMessage(process.MainWindowHandle, WM_KEYDOWN, new IntPtr(VK_RETURN), IntPtr.Zero);
+                            Thread.Sleep(20); //! 30 ms delay before we go to next whisper
+                        }
 
                         Thread.Sleep(12000); //! Wait 12 seconds
                     }

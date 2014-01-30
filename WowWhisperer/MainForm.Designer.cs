@@ -33,11 +33,12 @@
             this.textBoxWowDir = new System.Windows.Forms.TextBox();
             this.textBoxAccountName = new System.Windows.Forms.TextBox();
             this.textBoxAccountPassword = new System.Windows.Forms.TextBox();
+            this.textBoxWhisperMessage = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 64);
+            this.button1.Location = new System.Drawing.Point(12, 90);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(121, 23);
             this.button1.TabIndex = 0;
@@ -47,7 +48,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(135, 64);
+            this.button2.Location = new System.Drawing.Point(135, 90);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(121, 23);
             this.button2.TabIndex = 1;
@@ -64,24 +65,32 @@
             // 
             // textBoxAccountName
             // 
-            this.textBoxAccountName.Location = new System.Drawing.Point(12, 38);
+            this.textBoxAccountName.Location = new System.Drawing.Point(12, 64);
             this.textBoxAccountName.Name = "textBoxAccountName";
             this.textBoxAccountName.Size = new System.Drawing.Size(121, 20);
             this.textBoxAccountName.TabIndex = 4;
             // 
             // textBoxAccountPassword
             // 
-            this.textBoxAccountPassword.Location = new System.Drawing.Point(135, 38);
+            this.textBoxAccountPassword.Location = new System.Drawing.Point(135, 64);
             this.textBoxAccountPassword.Name = "textBoxAccountPassword";
             this.textBoxAccountPassword.PasswordChar = '*';
             this.textBoxAccountPassword.Size = new System.Drawing.Size(121, 20);
             this.textBoxAccountPassword.TabIndex = 5;
             // 
+            // textBoxWhisperMessage
+            // 
+            this.textBoxWhisperMessage.Location = new System.Drawing.Point(12, 38);
+            this.textBoxWhisperMessage.Name = "textBoxWhisperMessage";
+            this.textBoxWhisperMessage.Size = new System.Drawing.Size(244, 20);
+            this.textBoxWhisperMessage.TabIndex = 6;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(271, 97);
+            this.ClientSize = new System.Drawing.Size(271, 124);
+            this.Controls.Add(this.textBoxWhisperMessage);
             this.Controls.Add(this.textBoxAccountPassword);
             this.Controls.Add(this.textBoxAccountName);
             this.Controls.Add(this.textBoxWowDir);
@@ -107,6 +116,7 @@
         private System.Windows.Forms.TextBox textBoxWowDir;
         private System.Windows.Forms.TextBox textBoxAccountName;
         private System.Windows.Forms.TextBox textBoxAccountPassword;
+        private System.Windows.Forms.TextBox textBoxWhisperMessage;
     }
 }
 
