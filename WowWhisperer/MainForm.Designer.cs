@@ -50,11 +50,11 @@
             // 
             // buttonPerformWhisperer
             // 
-            this.buttonPerformWhisperer.Location = new System.Drawing.Point(135, 90);
+            this.buttonPerformWhisperer.Location = new System.Drawing.Point(12, 119);
             this.buttonPerformWhisperer.Name = "buttonPerformWhisperer";
-            this.buttonPerformWhisperer.Size = new System.Drawing.Size(121, 23);
+            this.buttonPerformWhisperer.Size = new System.Drawing.Size(244, 23);
             this.buttonPerformWhisperer.TabIndex = 1;
-            this.buttonPerformWhisperer.Text = "Perform whispers";
+            this.buttonPerformWhisperer.Text = "Start the whispers!";
             this.buttonPerformWhisperer.UseVisualStyleBackColor = true;
             this.buttonPerformWhisperer.Click += new System.EventHandler(this.buttonPerformWhisperer_Click);
             // 
@@ -90,7 +90,7 @@
             // buttonCancelWhispers
             // 
             this.buttonCancelWhispers.Enabled = false;
-            this.buttonCancelWhispers.Location = new System.Drawing.Point(135, 119);
+            this.buttonCancelWhispers.Location = new System.Drawing.Point(135, 90);
             this.buttonCancelWhispers.Name = "buttonCancelWhispers";
             this.buttonCancelWhispers.Size = new System.Drawing.Size(121, 23);
             this.buttonCancelWhispers.TabIndex = 7;
