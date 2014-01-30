@@ -31,19 +31,6 @@ namespace WowWhisperer
         [DllImport("kernel32.dll")]
         static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, UIntPtr nSize, ref UInt32 lpNumberOfBytesRead);
 
-        public Process process = null;
-        private bool cancelWhispers = false;
-
-        public MainForm()
-        {
-            InitializeComponent();
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            textBoxWowDir.Text = Settings.Default.WorldOfWarcraftDir;
-        }
-
         struct WhoResult
         {
             [MarshalAsAttribute(UnmanagedType.ByValTStr, SizeConst = 48)]
@@ -55,6 +42,21 @@ namespace WowWhisperer
             public int Class;
             public int Gender;
             public int Area;
+        }
+
+        public Process process = null;
+        private bool cancelWhispers = false;
+
+        public MainForm()
+        {
+            InitializeComponent();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            textBoxWowDir.Text = Settings.Default.WorldOfWarcraftDir;
+
+            textBoxWhisperMessage.Text = Settings.Default.WhisperMessage;
         }
 
         public byte[] ReadBytes(IntPtr hnd, IntPtr Pointer, int Length)
@@ -265,6 +267,7 @@ namespace WowWhisperer
             Settings.Default.WorldOfWarcraftDir = textBoxWowDir.Text;
             Settings.Default.AccountName = textBoxAccountName.Text;
             Settings.Default.AccountPassword = textBoxAccountPassword.Text;
+            Settings.Default.WhisperMessage = textBoxWhisperMessage.Text;
             Settings.Default.Save();
         }
     }

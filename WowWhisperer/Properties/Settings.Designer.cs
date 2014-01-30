@@ -58,5 +58,17 @@ namespace WowWhisperer.Properties {
                 this["AccountPassword"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WhisperMessage {
+            get {
+                return ((string)(this["WhisperMessage"]));
+            }
+            set {
+                this["WhisperMessage"] = value;
+            }
+        }
     }
 }
