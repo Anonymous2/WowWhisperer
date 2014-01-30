@@ -32,6 +32,7 @@ namespace WowWhisperer
         static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, UIntPtr nSize, ref UInt32 lpNumberOfBytesRead);
 
         public Process process = null;
+        private bool cancelWhispers = false;
 
         public MainForm()
         {
@@ -183,15 +184,6 @@ namespace WowWhisperer
                 {
                     Thread.CurrentThread.IsBackground = true;
 
-                    do
-                    {
-                        process.WaitForInputIdle();
-                        process.Refresh();
-                    }
-                    while (process.MainWindowHandle.ToInt32() == 0);
-
-                    Thread.Sleep(800);
-
                     SendMessage(process.MainWindowHandle, WM_KEYUP, new IntPtr(VK_RETURN), IntPtr.Zero);
                     SendMessage(process.MainWindowHandle, WM_KEYDOWN, new IntPtr(VK_RETURN), IntPtr.Zero);
                     Thread.Sleep(30);
@@ -208,7 +200,7 @@ namespace WowWhisperer
 
                         SendMessage(process.MainWindowHandle, WM_KEYUP, new IntPtr(VK_RETURN), IntPtr.Zero);
                         SendMessage(process.MainWindowHandle, WM_KEYDOWN, new IntPtr(VK_RETURN), IntPtr.Zero);
-                        Thread.Sleep(1000);
+                        Thread.Sleep(500);
 
                         byte[] numWhosBytes = ReadBytes(process.Handle, process.MainModule.BaseAddress + 0x87BFE0, 4);
                         uint numWhos = BitConverter.ToUInt32(numWhosBytes, 0);
