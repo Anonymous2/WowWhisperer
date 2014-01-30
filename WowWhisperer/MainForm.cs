@@ -55,8 +55,9 @@ namespace WowWhisperer
         private void MainForm_Load(object sender, EventArgs e)
         {
             textBoxWowDir.Text = Settings.Default.WorldOfWarcraftDir;
-
             textBoxWhisperMessage.Text = Settings.Default.WhisperMessage;
+            textBoxAccountName.Text = Settings.Default.AccountName;
+            textBoxAccountPassword.Text = Settings.Default.AccountPassword;
         }
 
         public byte[] ReadBytes(IntPtr hnd, IntPtr Pointer, int Length)
