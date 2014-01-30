@@ -70,20 +70,20 @@ namespace WowWhisperer
             textBoxAccountPassword.Text = Settings.Default.AccountPassword;
         }
 
-        public byte[] ReadBytes(IntPtr hnd, IntPtr Pointer, int Length)
+        public byte[] ReadBytes(IntPtr hnd, IntPtr pointer, int Length)
         {
-            byte[] Arr = new byte[Length];
-            uint Bytes = 0;
-            ReadProcessMemory(hnd, Pointer, Arr, (UIntPtr)Length, ref Bytes);
-            return Arr;
+            byte[] ipBuffer = new byte[Length];
+            uint bytes = 0;
+            ReadProcessMemory(hnd, pointer, ipBuffer, (UIntPtr)Length, ref bytes);
+            return ipBuffer;
         }
 
         T ByteArrayToStructure<T>(byte[] bytes) where T: struct 
         {
             GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-            T stuff = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
+            T newStruct = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
             handle.Free();
-            return stuff;
+            return newStruct;
         }
 
         private void buttonLaunchWow_Click(object sender, EventArgs e)
@@ -280,6 +280,19 @@ namespace WowWhisperer
             Settings.Default.AccountPassword = textBoxAccountPassword.Text;
             Settings.Default.WhisperMessage = textBoxWhisperMessage.Text;
             Settings.Default.Save();
+        }
+
+        private void buttonSearchWowDir_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Exe files (*.exe)|*.exe";
+            openFileDialog.FileName = "";
+
+            if (textBoxWowDir.Text != "" && Directory.Exists(textBoxWowDir.Text))
+                openFileDialog.InitialDirectory = textBoxWowDir.Text;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+                textBoxWowDir.Text = openFileDialog.FileName;
         }
     }
 }

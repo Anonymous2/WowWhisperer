@@ -36,6 +36,7 @@
             this.textBoxAccountPassword = new System.Windows.Forms.TextBox();
             this.textBoxWhisperMessage = new System.Windows.Forms.TextBox();
             this.buttonCancelWhispers = new System.Windows.Forms.Button();
+            this.buttonSearchWowDir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonLaunchWow
@@ -62,7 +63,7 @@
             // 
             this.textBoxWowDir.Location = new System.Drawing.Point(12, 12);
             this.textBoxWowDir.Name = "textBoxWowDir";
-            this.textBoxWowDir.Size = new System.Drawing.Size(244, 20);
+            this.textBoxWowDir.Size = new System.Drawing.Size(219, 20);
             this.textBoxWowDir.TabIndex = 2;
             // 
             // textBoxAccountName
@@ -98,11 +99,22 @@
             this.buttonCancelWhispers.UseVisualStyleBackColor = true;
             this.buttonCancelWhispers.Click += new System.EventHandler(this.buttonCancelWhispers_Click);
             // 
+            // buttonSearchWowDir
+            // 
+            this.buttonSearchWowDir.Location = new System.Drawing.Point(231, 11);
+            this.buttonSearchWowDir.Name = "buttonSearchWowDir";
+            this.buttonSearchWowDir.Size = new System.Drawing.Size(25, 22);
+            this.buttonSearchWowDir.TabIndex = 8;
+            this.buttonSearchWowDir.Text = "...";
+            this.buttonSearchWowDir.UseVisualStyleBackColor = true;
+            this.buttonSearchWowDir.Click += new System.EventHandler(this.buttonSearchWowDir_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(271, 149);
+            this.Controls.Add(this.buttonSearchWowDir);
             this.Controls.Add(this.buttonCancelWhispers);
             this.Controls.Add(this.textBoxWhisperMessage);
             this.Controls.Add(this.textBoxAccountPassword);
@@ -133,6 +145,7 @@
         private System.Windows.Forms.TextBox textBoxAccountPassword;
         private System.Windows.Forms.TextBox textBoxWhisperMessage;
         private System.Windows.Forms.Button buttonCancelWhispers;
+        private System.Windows.Forms.Button buttonSearchWowDir;
     }
 }
 
