@@ -142,6 +142,11 @@ namespace WowWhisperer
             }).Start();
         }
 
+        private void buttonCancelWhispers_Click(object sender, EventArgs e)
+        {
+            cancelWhispers = true;
+        }
+
         private void buttonPerformWhisperer_Click(object sender, EventArgs e)
         {
             if (process == null)
@@ -198,9 +203,21 @@ namespace WowWhisperer
                             Thread.Sleep(30);
                         }
 
+                        if (cancelWhispers)
+                        {
+                            Thread.CurrentThread.Abort();
+                            return;
+                        }
+
                         SendMessage(process.MainWindowHandle, WM_KEYUP, new IntPtr(VK_RETURN), IntPtr.Zero);
                         SendMessage(process.MainWindowHandle, WM_KEYDOWN, new IntPtr(VK_RETURN), IntPtr.Zero);
                         Thread.Sleep(500);
+
+                        if (cancelWhispers)
+                        {
+                            Thread.CurrentThread.Abort();
+                            return;
+                        }
 
                         byte[] numWhosBytes = ReadBytes(process.Handle, process.MainModule.BaseAddress + 0x87BFE0, 4);
                         uint numWhos = BitConverter.ToUInt32(numWhosBytes, 0);
@@ -218,6 +235,12 @@ namespace WowWhisperer
                             {
                                 SendMessage(process.MainWindowHandle, WM_CHAR, new IntPtr(whisperStr[x]), IntPtr.Zero);
                                 Thread.Sleep(20);
+                            }
+
+                            if (cancelWhispers)
+                            {
+                                Thread.CurrentThread.Abort();
+                                return;
                             }
 
                             SendMessage(process.MainWindowHandle, WM_KEYUP, new IntPtr(VK_RETURN), IntPtr.Zero);

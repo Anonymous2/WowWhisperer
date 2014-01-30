@@ -34,6 +34,7 @@
             this.textBoxAccountName = new System.Windows.Forms.TextBox();
             this.textBoxAccountPassword = new System.Windows.Forms.TextBox();
             this.textBoxWhisperMessage = new System.Windows.Forms.TextBox();
+            this.buttonCancelWhispers = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonLaunchWow
@@ -85,11 +86,22 @@
             this.textBoxWhisperMessage.Size = new System.Drawing.Size(244, 20);
             this.textBoxWhisperMessage.TabIndex = 6;
             // 
+            // buttonCancelWhispers
+            // 
+            this.buttonCancelWhispers.Location = new System.Drawing.Point(135, 119);
+            this.buttonCancelWhispers.Name = "buttonCancelWhispers";
+            this.buttonCancelWhispers.Size = new System.Drawing.Size(121, 23);
+            this.buttonCancelWhispers.TabIndex = 7;
+            this.buttonCancelWhispers.Text = "Cancel whispers";
+            this.buttonCancelWhispers.UseVisualStyleBackColor = true;
+            this.buttonCancelWhispers.Click += new System.EventHandler(this.buttonCancelWhispers_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(271, 124);
+            this.ClientSize = new System.Drawing.Size(271, 149);
+            this.Controls.Add(this.buttonCancelWhispers);
             this.Controls.Add(this.textBoxWhisperMessage);
             this.Controls.Add(this.textBoxAccountPassword);
             this.Controls.Add(this.textBoxAccountName);
@@ -117,6 +129,7 @@
         private System.Windows.Forms.TextBox textBoxAccountName;
         private System.Windows.Forms.TextBox textBoxAccountPassword;
         private System.Windows.Forms.TextBox textBoxWhisperMessage;
+        private System.Windows.Forms.Button buttonCancelWhispers;
     }
 }
 
