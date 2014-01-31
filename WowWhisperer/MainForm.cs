@@ -68,6 +68,8 @@ namespace WowWhisperer
             textBoxWhisperMessage.Text = Settings.Default.WhisperMessage;
             textBoxAccountName.Text = Settings.Default.AccountName;
             textBoxAccountPassword.Text = Settings.Default.AccountPassword;
+
+            buttonPerformWhisperer.Select();
         }
 
         public byte[] ReadBytes(IntPtr hnd, IntPtr pointer, int Length)
