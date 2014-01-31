@@ -18,13 +18,13 @@ namespace WowWhisperer
 {
     public partial class MainForm : Form
     {
-        private const int EM_SETCUEBANNER = 0x1501;
+        private const int EM_SETCUEBANNER = 0x1501; //! Placeholder text
+
         private const uint WM_KEYDOWN = 0x0100;
         private const uint WM_KEYUP = 0x0101;
         private const uint WM_CHAR = 0x0102;
         private const int VK_RETURN = 0x0D;
         private const int VK_TAB = 0x09;
-        private const int VK_BACK = 0x08;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern Int32 SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)]string lParam);
@@ -38,9 +38,9 @@ namespace WowWhisperer
         struct WhoResult
         {
             [MarshalAsAttribute(UnmanagedType.ByValTStr, SizeConst = 48)]
-            public string Name;
+            public string Name; // char[48]
             [MarshalAsAttribute(UnmanagedType.ByValTStr, SizeConst = 96)]
-            public string GuildName;
+            public string GuildName; // char[96]
             public int Level;
             public int Race;
             public int Class;
@@ -48,7 +48,7 @@ namespace WowWhisperer
             public int Area;
         }
 
-        public Process process = null;
+        public Process process { get; set; }
         private bool cancelWhispers = false;
 
         public MainForm()
@@ -69,6 +69,8 @@ namespace WowWhisperer
             textBoxAccountName.Text = Settings.Default.AccountName;
             textBoxAccountPassword.Text = Settings.Default.AccountPassword;
 
+            //! Select the Perform Whispers button so the placeholder text on the textbox of
+            //! the wow.exe directory is also shown if the user didn't set it yet (or reset it).
             buttonPerformWhisperer.Select();
         }
 
